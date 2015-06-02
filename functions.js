@@ -4,33 +4,20 @@ function parseString(dataString){
 
 function readString(dataString){
 	var size = dataString.length;
-	var operation = '+';
-	var total = 0;
-	//go through each element and calculate individually
+	var evalString = '';
+
 	for(var i = 2; i < size; i++){
-		//found an operation
-		if(dataString[i] % 1 !== 0){
-			operation = dataString[i];
+		if(dataString[i] === 'calc.js' || dataString[i] === 'functions.js'){
+			evalString += '*';
+			i++;
 		}
-		//found a number
-		else{
-			switch(operation){
-				case '+':
-					total += Number(dataString[i]);
-					break;
-				case '-':
-					total -= Number(dataString[i]);
-					break;
-				case '*':
-					total *= Number(dataString[i]);
-					break;
-				case '/':
-					total /= Number(dataString[i]);
-					break;
-			}
+
+		else if(dataString[i] != ' '){
+			evalString += dataString[i];
 		}
 	}
-	console.log(total);
+
+	console.log(eval(evalString));
 }
 
 module.exports.parseString = parseString;
