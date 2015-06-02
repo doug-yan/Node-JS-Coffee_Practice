@@ -1,29 +1,5 @@
 function parseString(dataString){
-	var numbers = dataString.split(/\D/);
-	var operators = dataString.split(/\d/);
-	var total = Number(numbers[0]);
-
-	for(var i = 0; i < numbers.length-1; i++){
-		switch(operators[i+1]){
-			case '+':
-				total += Number(numbers[i+1]);
-				break;
-
-			case '-':
-				total -= Number(numbers[i+1]);
-				break;
-
-			case '*':
-				total *= Number(numbers[i+1]);
-				break;
-
-			case '/':
-				total /= Number(numbers[i+1]);
-				break;
-		}
-	}
-
-	console.log(total);
+	console.log(eval(dataString));
 }
 
 function readString(dataString){
