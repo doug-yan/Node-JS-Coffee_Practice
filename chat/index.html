@@ -8,8 +8,7 @@
 	<body>
 		<div class= "chat">
 			<input type ="text" class="chat-name" placeholder="Enter your name">
-			<div class="chat-messages">
-			</div>
+			<div class="chat-messages"></div>
 			<textarea placeholder="Type your message"></textarea>
 			<div class="chat-status">Status: <span>Idle</span></div>
 		</div>
@@ -23,7 +22,8 @@
 				},
 
 				//Get required nodes
-				status = getNode('.chat-status span');
+				status = getNode('.chat-status span'),
+				messages = getNode('.chat-messages'),
 				textarea = getNode('.chat textarea'),
 				chatName = getNode('.chat-name'),
 
@@ -47,6 +47,22 @@
 				}
 
 				if(socket !== undefined){
+					//Listen for output
+					socket.on('output', function(data){
+						if(data.length){
+							//loop through result
+							for(var x = 0; x < data.length; x = x+1){
+								console.log(data);
+								var message = document.createElement('div');
+								message.setAttribute('class', 'chat-message');
+								message.textContent = data[x].name + ": " + data[x].message;
+
+								//append
+								messages.appendChild(message);
+								messages.insertBefore(message, messages.firstChild);
+							}
+						}
+					});
 					//Listen for a status
 					socket.on('status', function(data){
 						setStatus((typeof(data) === 'object') ? data.message : data);
