@@ -1,7 +1,7 @@
 mongo = require('mongodb').MongoClient
 client = require('socket.io').listen(8080).sockets
 
-mongo.connect 'mongodb://127.0.0.1', (err, db) ->
+mongo.connect 'mongodb://127.0.0.1/chat', (err, db) ->
 	if err 
 		throw err
 
@@ -21,7 +21,7 @@ mongo.connect 'mongodb://127.0.0.1', (err, db) ->
 			message = data.message
 			whiteSpacePattern = ///^\s*$///
 
-			if whiteSpacePattern.test name || whiteSpacePattern.test message 
+			if whiteSpacePattern.test(name) || whiteSpacePattern.test(message)
 				sendStatus 'Name and message is required.'
 
 			else
